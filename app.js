@@ -85,6 +85,6 @@ app.route('/deleteall')
     res.redirect('/')
   })
 
-app.listen(process.env.PORT || 3000,() =>{
+app.listen((process.env.PORT || 3000),() =>{
   console.log(`Port: ${port}`)
 })
