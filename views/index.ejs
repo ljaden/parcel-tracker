@@ -1,0 +1,60 @@
+<%- include('partials/header') -%>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th><a href="/deleteall"><button class="btn-danger">Remove</button></a></th>
+        <th>Tracking #</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Message</th>
+        <th>Expand</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% data.forEach((el,i) => { %>
+        <% if(!el.checkpoints[0]){ %>
+          <tr>
+            <td><%= i %></td>
+            <td><a href="/delete/<%= el.tracking_number%>">Delete</a></td>
+            <td><a href='https://www.ups.com/track?loc=en_US&tracknum=<%= el.tracking_number %>' target="_blank"><%= el.tracking_number %></a></td>
+            <td class="<%= el.status %>"><%= el.status %></td>
+            <td> Missing Data </td>
+            <td class="tbl-message"> Missing Data </td>
+            <td> </td>
+          </tr>
+          <%} else {%>
+            <tr>
+              <td><%= i %></td>
+              <td><a href="/delete/<%= el.tracking_number%>">Delete</a></td>
+              <td><a href='https://www.ups.com/track?loc=en_US&tracknum=<%= el.tracking_number %>' target="_blank"><%= el.tracking_number %></a></td>
+              <td class="<%= el.status %>"><%= el.status %></td>
+              <td><%= el.checkpoints[0].time.split('T')[0] %></td>
+              <td class="tbl-message"><%= el.checkpoints[0].message %></td>
+              
+              <!-- Expand button -->
+              <td>
+                <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#id<%= el.tracking_number %>" aria-expanded="false" aria-controls="collapseExample">+</button>
+              </td>
+            </tr>
+            <!-- dropdown table -->
+            <% el.checkpoints.forEach(checkpoint => { %>
+              <tr id="id<%= el.tracking_number %>" class="collapse expand-table">
+                <td colspan="12">
+                  <div class="expand-table-info">
+                    <strong><%= checkpoint.message %></strong>
+                    <br>
+                    <%= checkpoint.time.split("T")[0] %>
+                    <br><br>
+                    <%= checkpoint.location %>
+                    <br>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+        <%}%>
+      <% }) %>
+               
+<%- include('partials/footer') -%>

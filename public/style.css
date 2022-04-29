@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 2% 5% 2%;
+}
+
+table {
+  text-align: center;
+}
+
+td {
+  white-space: nowrap;
+  padding: 10px;
+}
+.tbl-message {
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.Delivered {
+  background: #a5cfb5 !important;
+}
+.Exception, .Invalid {
+  background: #e08791 !important;
+}
+.Pending {
+  background: #fdf5e2 !important ;
+}
+
+.expand-table {
+  border: 1px solid black;
+  text-align: left;
+}
+.expand-table-info {
+  margin-left: 2%;
+}
