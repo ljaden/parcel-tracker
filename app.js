@@ -84,7 +84,7 @@ app.route('/deleteall')
     await Package.deleteMany({})
     res.redirect('/')
   })
-
-app.listen((process.env.PORT || 3000),() =>{
+const port = 3000
+app.listen((process.env.PORT || port),() =>{
   console.log(`Port: ${port}`)
 })
