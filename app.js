@@ -1,4 +1,5 @@
 const f = require('./function/getData')
+const v = require('./function/validation')
 
 require('dotenv').config()
 const express = require('express');
@@ -26,6 +27,7 @@ const packageSchema = new mongoose.Schema({
 // model
 const Package = mongoose.model('Package',packageSchema)
 
+
 // root route
 app.route('/')
   .get(async(req,res) => { // GET
@@ -34,9 +36,10 @@ app.route('/')
     res.render('index',{data:data})
   })
   .post(async(req,res) => { // POST
-    const trackingNum = req.body.trackingNumber.split(' ')
+    const listOfTrackers = req.body.trackingNumber.split(' ')
     // console.log('list: ',trackingNum)
-    
+    const trackingNum = listOfTrackers.filter(num => v.validate(num))
+
     for(let i=0;i<trackingNum.length;i++){
 
       await f.getData(trackingNum[i]).then(value => {
