@@ -2,10 +2,12 @@ const f = require('./function/getData')
 const v = require('./function/validation')
 
 require('dotenv').config()
+const fs = require('fs')
 const express = require('express');
 const ejs = require('ejs');
 const mongoose = require('mongoose')
-const moment = require('moment')
+const moment = require('moment');
+const { AsyncResource } = require('async_hooks');
 
 const app = express();
 app.set('view engine','ejs');
@@ -71,7 +73,20 @@ app.route('/')
     }
     res.redirect('/')
   })
-  
+
+// downloads route
+
+const tabletojson = require('tabletojson').Tabletojson;
+const w = require('./function/writeCsv')
+
+app.route('/download/data')
+  .get(async(req,res) => {
+    // function to write data to csv file
+    w.writeCsv();
+    
+    res.redirect('/')
+  })
+
 // delete specific
 app.route('/delete/:id')
   .get(async (req,res) => {
