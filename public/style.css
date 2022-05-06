@@ -1,7 +1,18 @@
 * {
   box-sizing: border-box;
+  list-style-type: none;
 }
 
+body {
+  max-width: 1500px;
+}
+.navbar {
+  margin: 1% 5% 1% ;
+}
+
+.nav-links {
+  text-decoration: none;
+}
 .container {
   margin: 2% 5% 2%;
 }
