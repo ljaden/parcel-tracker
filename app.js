@@ -35,8 +35,6 @@ const Package = mongoose.model('Package',packageSchema)
 // root route
 app.route('/')
   .get(async(req,res) => { // GETrs
-    // creates a csv file of data in 'download/data.csv
-    w.writeCsv();
 
     const data = await Package.find({})
     
@@ -83,10 +81,16 @@ app.route('/')
 app.route('/download/data')
   .get(async(req,res) => {
 
-    // download file
-    res.download('download/data.csv',(err) => {
-      if(err) res.status(404).send("<h1>File not found: 404</h1>")
-    } )
+    const data = await w.getCsv()
+
+    fs.writeFile('./download/data.csv',data,(err) => {
+      if(!err){
+        // download file
+        res.download('download/data.csv',(err) => {
+          if(err) res.status(404).send("<h1>File not found: 404</h1>")
+        })
+      }
+    })
   })
 
 // delete specific
