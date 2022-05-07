@@ -1,7 +1,9 @@
 const f = require('./function/getData')
 const v = require('./function/validation')
+const w = require('./function/writeCsv')
 
 require('dotenv').config()
+const tabletojson = require('tabletojson').Tabletojson;
 const fs = require('fs')
 const express = require('express');
 const ejs = require('ejs');
@@ -32,7 +34,10 @@ const Package = mongoose.model('Package',packageSchema)
 
 // root route
 app.route('/')
-  .get(async(req,res) => { // GET
+  .get(async(req,res) => { // GETrs
+    // creates a csv file of data in 'download/data.csv
+    w.writeCsv();
+
     const data = await Package.find({})
     
     res.render('index',{data:data})
@@ -75,16 +80,13 @@ app.route('/')
   })
 
 // downloads route
-
-const tabletojson = require('tabletojson').Tabletojson;
-const w = require('./function/writeCsv')
-
 app.route('/download/data')
   .get(async(req,res) => {
-    // function to write data to csv file
-    w.writeCsv();
-    
-    res.redirect('/')
+
+    // download file
+    res.download('download/data.csv',(err) => {
+      if(err) res.status(404).send("<h1>File not found: 404</h1>")
+    } )
   })
 
 // delete specific

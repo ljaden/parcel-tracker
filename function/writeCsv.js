@@ -23,7 +23,6 @@ module.exports = {
 
           fs.appendFile('./download/data.csv',_str,(err) => {
             if(err) return console.log(err);
-            console.log('done!')
           })
         }
       }
