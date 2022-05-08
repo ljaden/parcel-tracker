@@ -1,8 +1,9 @@
-const f = require('./function/getData')
-const v = require('./function/validation')
-const w = require('./function/writeCsv')
-
 require('dotenv').config()
+
+// custom helper function
+const helperFunction = require('./function/helpers')
+
+// require 
 const tabletojson = require('tabletojson').Tabletojson;
 const fs = require('fs')
 const express = require('express');
@@ -11,13 +12,12 @@ const mongoose = require('mongoose')
 const moment = require('moment');
 const { AsyncResource } = require('async_hooks');
 
+// express
 const app = express();
 app.set('view engine','ejs');
 app.use(express.urlencoded({extended:false}));
 app.use(express.static('public'));
 
-// connect to database
-// mongoose.connect('mongodb://localhost:27017/trackerDB')
 // connect to Atlas DB
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.KEY}@cluster0.mb1wr.mongodb.net/trackerDb`)
 
@@ -43,11 +43,11 @@ app.route('/')
   .post(async(req,res) => { // POST
     const listOfTrackers = req.body.trackingNumber.split(' ')
     // console.log('list: ',trackingNum)
-    const trackingNum = listOfTrackers.filter(num => v.validate(num))
+    const trackingNum = listOfTrackers.filter(num => helperFunction.validate(num))
 
     for(let i=0;i<trackingNum.length;i++){
 
-      await f.getData(trackingNum[i]).then(value => {
+      await helperFunction.getData(trackingNum[i]).then(value => {
         Package.replaceOne({tracking_number:trackingNum[i]},
           {tracking_number:value.number,
             status:value.status,
@@ -81,8 +81,9 @@ app.route('/')
 app.route('/download/data')
   .get(async(req,res) => {
 
-    const data = await w.getCsv()
+    const data = await helperFunction.getTable()
 
+    // writes data into csv 
     fs.writeFile('./download/data.csv',data,(err) => {
       if(!err){
         // download file
