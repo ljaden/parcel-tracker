@@ -8,7 +8,8 @@ A UPS package tracking application - When provided with UPS Tracking Number(s) i
 ## Tech : ![mongoDb](https://img.shields.io/static/v1?label=|&message=mongoDB&style=plastic&logo=mongodb) ![expressjs](https://img.shields.io/static/v1?label=|&message=express.js&style=plastic&logo=express) ![nodejs](https://img.shields.io/static/v1?label=|&message=nodejs&style=plastic&logo=nodedotjs)
 
 # Optimizations
-Improved data storage by implementing mongoDB Atlas allowing for better future scalability. Overall much faster than storing the data locally in a JSON.
+- [X] Improved data storage by implementing mongoDB Atlas allowing for better future scalability. Overall much faster than storing the data locally in a JSON.
+- [X] Added regex to filter out and validate legimate UPS tracking numbers before the data was fetched to avoid unneccessary data calls.
 
 # Future Implementations
 - Add the ability to track packages from all United States shipping services such as USPS, FedEx, DHL, and LaserShip.
