@@ -67,7 +67,7 @@ app.route('/')
               location:'N/A',
               message:'Invalid tracking number -- Please check for typos',
               status:'Invalid',
-              time:moment().format() //ust
+              time:moment().format() //utc
             }],
           },
           {upsert:true},
